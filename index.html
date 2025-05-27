@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To-Do List</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>To-Do List</h2>
+  <div id="todo-form">
+    <input type="text" id="task-input" placeholder="Enter a new task..." />
+    <button id="add-btn">Add</button>
+  </div>
+  <ul id="task-list"></ul>
+
+  <script>
+    
+    const addBtn = document.getElementById('add-btn');
+    const taskInput = document.getElementById('task-input');
+    const taskList = document.getElementById('task-list');
+
+    addBtn.addEventListener('click', () => {
+      const taskText = taskInput.value.trim();
+      if (taskText !== '') {
+        addTask(taskText);
+        taskInput.value = '';
+      }
+    });
+
+    function addTask(text) {
+      const li = document.createElement('li');
+      li.textContent = text;
+
+      li.addEventListener('click', () => {
+        li.classList.toggle('completed'); 
+      });
+
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = 'X';
+      removeBtn.classList.add('remove-btn');
+      removeBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Avoid triggering toggle
+        taskList.removeChild(li); 
+      });
+
+      li.appendChild(removeBtn);
+      taskList.appendChild(li); 
+    }
+  </script>
+</body>
+</html>
